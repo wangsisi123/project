@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>学生信息表</title>
+	<link rel="stylesheet" href="elementui.min.css">
+	<script src="vue.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="elementui.min.js"></script>
+</head>
+<body>
+	<div id="div">
+		<el-table :data="list">
+			<el-table-column prop="ID" label="序号"></el-table-column>
+			<el-table-column prop="name" label="姓名"></el-table-column>
+			<el-table-column prop="sex" label="性别">
+				<template slot-scope="data">
+					<span v-if="data.row.sex">男</span>
+					<span v-else>女</span>
+				</template>
+			</el-table-column>
+			<el-table-column prop="birthday" label="出生日期" width="120px;"></el-table-column>
+			<el-table-column prop="department" label="所属部门"></el-table-column>
+			<el-table-column prop="status" label="在职状态">
+				<template slot-scope="data">
+					<el-tooltip v-if="data.row.status" :content="data.row.joinDate">
+						<el-tag type="primary" >在职</el-tag>
+					</el-tooltip>
+					<el-tooltip v-if="!data.row.status" :content="data.row.leaveDate">
+						<el-tag type="danger">离职</el-tag>
+					</el-tooltip>
+				</template>
+			</el-table-column>
+			<el-table-column prop="joinDate" label="入职时间" width="100px"></el-table-column>
+			<el-table-column prop="leaveDate" label="离职时间" width="100px"></el-table-column>
+			<el-table-column prop="salary" label="薪资"></el-table-column>
+			<el-table-column prop="IDCard" label="身份证号" width="200px"></el-table-column>
+			<el-table-column prop="number" label="手机号" width="120px"></el-table-column>
+			<el-table-column label="操作" width="200px">
+				<template slot-scope="data">
+					<el-button size="mini" type="primary" icon="el-icon-edit" @click="edit(data.$index)">编辑</el-button>
+					<el-button size="mini" type="danger" icon="el-icon-delete" @click="del(data.row.ID)">删除</el-button>
+				</template>
+			</el-table-column>
+		</el-table>
+		<el-dialog :visible.sync="dialogVisible" title="编辑员工信息" width="30%">
+			<el-form class="ipt">
+				<el-form-item label="ID">
+			    	<el-input v-model="ipt.ID" disabled></el-input>
+			  	</el-form-item>
+
+				<el-form-item label="姓名">
+			    	<el-input v-model="ipt.name"></el-input>
+			  	</el-form-item>
+
+			  	<el-form-item label="性别">
+			    	<el-radio v-model="ipt.sex" label="1">男</el-radio>
+			    	<el-radio v-model="ipt.sex" label="0">女</el-radio>
+			  	</el-form-item>
+
+			  	<el-form-item label="出生日期">
+			    	<el-input v-model="ipt.birthday"></el-input>
+			  	</el-form-item>
+
+			  	<el-form-item label="所属部门">
+			    	<el-input v-model="ipt.department"></el-input>
+			  	</el-form-item>
+
+			  	<el-form-item label="">
+			    	<el-switch v-model="ipt.status" active-text="在职" inactive-text="离职">
+					</el-switch>
+			  	</el-form-item>
+
+			  	<el-form-item label="入职时间">
+			    	<el-input v-model="ipt.joinDate"></el-input>
+			  	</el-form-item>
+
+			  	<el-form-item label="离职时间">
+			    	<el-input v-model="ipt.leaveDate"></el-input>
+			  	</el-form-item>
+
+			  	<el-form-item label="薪资">
+			    	<el-input v-model="ipt.salary"></el-input>
+			  	</el-form-item>
+
+			  	<el-form-item label="身份证">
+			    	<el-input v-model="ipt.IDCard"></el-input>
+			  	</el-form-item>
+
+			  	<el-form-item label="手机号">
+			    	<el-input v-model="ipt.number"></el-input>
+			  	</el-form-item>
+			</el-form>
+			<div slot="footer">
+				<el-button type="warning" size="mini" @click="sure">确 定</el-button>
+				<el-button type="info" size="mini" @click="cancel">取 消</el-button>
+			</div>
+		</el-dialog>
+	</div>
+	<script>
+	var root = new Vue({
+		el:"#div",
+		data:{
+			list:[],
+			dialogVisible:false,
+			ipt:{
+				name:"",
+				sex:"",
+				birthday:"",
+				department:"",
+				status:"",
+				joinDate:"",
+				leaveDate:"",
+				salary:"",
+				IDCard:"",
+				number:""
+			}
+
+		},
+		
+		methods:{
+			del(id){
+				this.$confirm("确定删除员工信息？","提示",{
+					type:"warning"
+				}).then(()=>{
+					axios.get("http://127.0.0.1:8080/deleteData?ID="+id).then((response)=>{
+                      	if(response.data=="success"){
+                      		root.$message({
+                      			type: 'success',
+           						message: '删除成功!'
+                      		})
+                      		root.chaxun();
+                      	}
+					})
+				}).catch(()=>{
+					root.$message({
+						type: 'info',
+            			message: '已取消删除'
+					})
+				})
+			
+			},
+			chaxun(){
+				axios.get("http://127.0.0.1:8080/getData").then((response)=>{
+					root.list=response.data;
+					console.log(root.list)
+
+				})
+			},
+			edit(index){
+				root.dialogVisible=true
+				for(let i in this.list[index]){
+					this.ipt[i]=this.list[index][i];
+				}
+			},
+			sure(){
+				root.$confirm(){
+					
+				}
+				axsio.get("http://127.0.0.1:8080/edit",{
+					params:{
+						ID:root.ipt.ID;
+						name:root.itp.name,
+						sex:root.ipt.sex,
+						birthday:root.ipt.birthday,
+						department:root.ipt.department,
+						status:root.ipt.status,
+						joinDate:root.ipt.joinDate,
+						leaveDate:root.ipt.leaveDate,
+						salary:root.ipt.salary,
+						IDCard:root.ipt.IDCard,
+						number:root.ipt.number
+					}
+				})
+			},
+			cancel(){
+
+			}
+
+		},
+		mounted(){
+			this.chaxun();
+		}
+	})
+	</script>
+</body>
+</html>
