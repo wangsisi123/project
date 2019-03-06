@@ -1,21 +1,36 @@
 ﻿
 # 员工信息管理系统
+
 <hr>
+
 ### 员工信息管理系统数据接口
+
 # 技术：
+
 ### 前端技术：html css vue axios ElementUI
+
 ### 后端技术：node.js(express,url,express-static,mysQl)
+
 # 测试地址：
+
 ### [http://39.96.185.39:8080/studentdata.html](http://39.96.185.39:8080/studentdata.html)
 
-# 获取数据接口
+## 获取数据接口
+
 <hr>
+
 ### 接口地址：公网：[http://39.96.185.39:8080/chaxun](http://39.96.185.39:8080/chaxun)
+
 ### 返回格式：json
+
 ### 请求方式：get http
+
 ### 请求示例:[http://39.96.185.39:8080/chaxun](http://39.96.185.39:8080/chaxun)
+
 ## 请求参数说明:无
+
 ## 返回参数说明：
+
 <table>
    <thead>
          <tr>
@@ -77,15 +92,23 @@
         </tr>
    </tbody>
 </table>
-# 删除数据接口
 <hr>
+## 删除数据接口
+
 ### 接口地址：公网：[http://39.96.185.39:8080/deleteuser](http://39.96.185.39:8080/deleteuser)
+
 ### 返回格式：json
+
 ### 请求方式：get http
+
 ### 请求示例:[http://39.96.185.39:8080/deleteuser?ID="+id](http://39.96.185.39:8080/deleteuser?ID="+id)
+
 ### 请求参数说明:
+
 #### id:要删除员工的ID
+
 ### 返回参数说明：
+
 <table>
     <thead>
         <tr>
@@ -107,11 +130,15 @@
         </tr>
     </tbody>
 </table>
-# 添加数据接口
 <hr>
+## 添加数据接口
+
 ### 接口地址：公网：[http://39.96.185.39:8080/addData2r](http://39.96.185.39:8080/addData2)
+
 ### 返回格式：json
+
 ### 请求方式：get http
+
 ### 请求示例:[http://39.96.185.39:8080/addData2r](http://39.96.185.39:8080/addData2)
 ## 请求参数说明:
 <table>
@@ -197,8 +224,8 @@
         </tr>
     </tbody>
 </table>
-# 修改数据接口
 <hr>
+## 修改数据接口
 ### 接口地址：公网：[http://39.96.185.39:8080/sure](http://39.96.185.39:8080/sure)
 ### 返回格式：json
 ### 请求方式：get http
